@@ -46,7 +46,7 @@ router.post('/', async (req, res, next) => {
 
 
 //get de las ordenes pero ordenadas por fecha asc 
-router.get('/puta', async (req, res) => {
+router.get('/asc', async (req, res) => {
 
     try {
       const orden = await Order.findAll({
@@ -67,7 +67,7 @@ router.get('/puta', async (req, res) => {
 });
 
 //get de las ordenes pero ordenadas por fecha desc 
-router.get('/puta', async (req, res) => {
+router.get('/desc', async (req, res) => {
 
     try {
       const orden = await Order.findAll({
@@ -76,7 +76,7 @@ router.get('/puta', async (req, res) => {
               attributes: ['amount','quantity']
             }}
           ],
-        order: [["buyDate", "ASC"]]
+        order: [["buyDate", "DESC"]]
       })
 
       if (orden) return res.send('Orden no encontrada...')

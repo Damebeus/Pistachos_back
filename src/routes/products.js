@@ -3,6 +3,8 @@ const router = Router();
 const { Op } = require("sequelize");
 const { Product } = require("../db");
 
+//funcionalidad para ponerle un punto a los numeros
+
 router.get("/", async (req, res, next) => {
   try {
     const { name } = req.query;
@@ -58,4 +60,29 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async(req, res) => {
+  const { id } = req.params;
+  const { name, description, image, price, category, stock, disabled} = req.body;
+
+  try{
+  const updatedProduct = await Product.findByPk(id);
+  if (!updatedProduct) {
+    return res.status(404).send("Product not found");
+  }
+  await updatedProduct.update({
+    name, 
+    description, 
+    image, 
+    price, 
+    category, 
+    stock, 
+    disabled
+  });
+  res.status(200).send("Product updated successfully");
+} catch (error) {
+  console.log(error);
+}
+
+  
+})
 module.exports = router;
